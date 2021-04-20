@@ -20,6 +20,7 @@ const hourBlock = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5
 
 var hourColumnEl = document.querySelector(".hour");
 
+
 // Append buttons to 'hour' column ...
 // const currentHour = hourColumn[hourIndex];
 
@@ -43,3 +44,8 @@ for (let i = 0; i < hourBlock.length; i += 1) {
   containerEl.innerHTML += templateHtml;
 }
 
+const hourEls = document.getElementsByClassName("hour");
+
+for (let i = 0; i < hourEls.length; i += 1) {
+  hourEls[i].textContent = hourBlock[i];
+}
