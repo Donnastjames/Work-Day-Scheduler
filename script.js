@@ -1,4 +1,8 @@
 
+const HOURS_PER_WORKDAY = 9;
+const START_OF_WORKDAY_HOUR = 9;
+
+// TODO: Remove this routine if we don't ever use it ...
 // https://www.javascripttutorial.net/dom/manipulating/remove-all-child-nodes/
 function removeAllChildNodes(parent) {
   while (parent.firstChild) {
@@ -12,40 +16,35 @@ const containerEl = document.querySelector(".container");
 var today = moment();
 $("#currentDay").text(today.format('dddd MMMM Do YYYY'));
 
-// Create an array representing the hours in the day ...
-
-var hourIndex = 0;
-
-const hourBlock = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM"];
-
-var hourColumnEl = document.querySelector(".hour");
-
-
-// Append buttons to 'hour' column ...
-// const currentHour = hourColumn[hourIndex];
-
-// for (let i = 0; i < hourBlock.length; i += 1) {
-//   const hour = document.createElement("div");
-//   hour.classList.add("hour");
-//   const hourTextNode = document.createTextNode(hourBlock[i]);
-//   hour.appendChild(hourTextNode);
-//   hourColumnEl.appendChild(hour);
-// }
-
-// -------------
-
-console.log('containerEl.innerHtml', containerEl.innerHTML);
+// console.log('containerEl.innerHtml', containerEl.innerHTML);
 
 const templateHtml = containerEl.innerHTML;
 
 removeAllChildNodes(containerEl);
 
-for (let i = 0; i < hourBlock.length; i += 1) {
+for (let i = 0; i < HOURS_PER_WORKDAY; i += 1) {
   containerEl.innerHTML += templateHtml;
 }
 
 const hourEls = document.getElementsByClassName("hour");
+const descriptionEls = document.getElementsByClassName("description");
 
-for (let i = 0; i < hourEls.length; i += 1) {
-  hourEls[i].textContent = hourBlock[i];
+// Safely assuming the following should be somewhere between 0 and 23,
+// before it rolls back to 0 for the next day ...
+const presentHour = Number.parseInt(moment().format('HH'));
+
+for (let i = 0; i < HOURS_PER_WORKDAY; i += 1) {
+  // 'h' to reference the starting hour of the day ...
+  const h = START_OF_WORKDAY_HOUR + i;
+  hourEls[i].textContent = moment().hour(h).format('h A');
+  let colorClassName;
+  if (h < presentHour) {
+    colorClassName = "past";
+  } else if (h === presentHour) {
+    colorClassName = "present";
+  } else {
+    colorClassName = "future";
+  }
+
+  descriptionEls[i].classList.add(colorClassName);
 }
