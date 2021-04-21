@@ -2,14 +2,6 @@
 const HOURS_PER_WORKDAY = 9;
 const START_OF_WORKDAY_HOUR = 9;
 
-// TODO: Remove this routine if we don't ever use it ...
-// https://www.javascripttutorial.net/dom/manipulating/remove-all-child-nodes/
-function removeAllChildNodes(parent) {
-  while (parent.firstChild) {
-      parent.removeChild(parent.firstChild);
-  }
-}
-
 const containerEl = document.querySelector(".container");
 
 // Create variables to add the current date and day of the week ...
@@ -20,9 +12,9 @@ $("#currentDay").text(today.format('dddd MMMM Do YYYY'));
 
 const templateHtml = containerEl.innerHTML;
 
-removeAllChildNodes(containerEl);
-
-for (let i = 0; i < HOURS_PER_WORKDAY; i += 1) {
+// Start at index 1, so we can leave the first templateHtml innerHTML
+// where it was, but duplicate it for all the remaining HOURS_PER_WORKDAY.
+for (let i = 1; i < HOURS_PER_WORKDAY; i += 1) {
   containerEl.innerHTML += templateHtml;
 }
 
