@@ -61,8 +61,8 @@ for (let i = 0; i < HOURS_PER_WORKDAY; i += 1) {
   descriptionEls[i].classList.add(colorClassName);
   descriptionEls[i].textContent = hourDescriptions[i];
 
-  // Every time you add an eventListener, pass i as an index
-  // so that your function up above knows which index to save to ...
+  // Add event listener and pass i as an index so that the 
+  // saveHourDescription() function knows which index to save to ...
   saveButtonEls[i].addEventListener("click", function() {
     console.log('i', i);
     console.log('descriptionEls[i].value', descriptionEls[i].value);
